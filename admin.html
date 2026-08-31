@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b3e7d">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Administración | INMUDEJ Delicias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+  <div class="auth-shell" id="authShell">
+    <div class="auth-card">
+      <img src="assets/img/inmudej-logo.png" alt="INMUDEJ Delicias" class="auth-logo">
+      <div id="setupView" hidden>
+        <span class="auth-eyebrow">Primera configuración</span>
+        <h1>Crea el acceso administrativo</h1>
+        <p>Define la cuenta principal para gestionar contenidos desde este navegador.</p>
+        <form id="setupForm" class="form-stack">
+          <label>Nombre del administrador<input name="name" required placeholder="Nombre completo"></label>
+          <label>Correo electrónico<input name="email" type="email" required placeholder="correo@delicias.gob.mx"></label>
+          <label>Contraseña<input name="password" type="password" required minlength="8" placeholder="Mínimo 8 caracteres"></label>
+          <label>Confirmar contraseña<input name="confirm" type="password" required minlength="8"></label>
+          <button class="primary-btn" type="submit">Crear acceso <i class="bi bi-arrow-right"></i></button>
+        </form>
+      </div>
+      <div id="loginView" hidden>
+        <span class="auth-eyebrow">Panel administrativo</span>
+        <h1>Bienvenido a INMUDEJ</h1>
+        <p>Ingresa para administrar la información pública de la landing.</p>
+        <form id="loginForm" class="form-stack">
+          <label>Correo electrónico<input name="email" type="email" required></label>
+          <label>Contraseña<div class="password-wrap"><input name="password" type="password" required id="loginPassword"><button type="button" id="togglePassword" aria-label="Mostrar contraseña"><i class="bi bi-eye"></i></button></div></label>
+          <button class="primary-btn" type="submit">Ingresar <i class="bi bi-box-arrow-in-right"></i></button>
+        </form>
+      </div>
+      <div class="auth-note"><i class="bi bi-shield-check"></i><span>Este panel está preparado como CMS estático. Para producción multiusuario se recomienda conectar autenticación y almacenamiento en la nube.</span></div>
+      <a class="back-site" href="index.html"><i class="bi bi-arrow-left"></i> Volver a la landing</a>
+    </div>
+  </div>
+
+  <div class="admin-shell" id="adminShell" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="side-brand"><img src="assets/img/inmudej-logo.png" alt="INMUDEJ"><span>Administración</span></div>
+      <nav class="side-nav" id="sideNav">
+        <button class="active" data-view="dashboard"><i class="bi bi-grid-1x2-fill"></i><span>Resumen</span></button>
+        <button data-view="carousel"><i class="bi bi-images"></i><span>Carrousel</span></button>
+        <button data-view="calls"><i class="bi bi-megaphone-fill"></i><span>Convocatorias</span></button>
+        <button data-view="forms"><i class="bi bi-ui-checks-grid"></i><span>Formularios</span></button>
+        <button data-view="events"><i class="bi bi-calendar-event-fill"></i><span>Calendario</span></button>
+        <button data-view="services"><i class="bi bi-stars"></i><span>Servicios y costos</span></button>
+        <button data-view="docs"><i class="bi bi-folder2-open"></i><span>Transparencia</span></button>
+        <button data-view="institutional"><i class="bi bi-bank2"></i><span>Conócenos</span></button>
+      </nav>
+      <div class="side-bottom"><a href="index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i><span>Ver sitio público</span></a><button id="logoutBtn"><i class="bi bi-box-arrow-left"></i><span>Cerrar sesión</span></button></div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="topbar">
+        <button class="mobile-menu" id="adminMenuBtn"><i class="bi bi-list"></i></button>
+        <div><small>INMUDEJ Delicias</small><h2 id="viewTitle">Panel de control</h2></div>
+        <div class="admin-user"><span class="avatar" id="adminAvatar">A</span><div><b id="adminName">Administrador</b><small id="adminEmail"></small></div></div>
+      </header>
+
+      <div class="workspace">
+        <section class="admin-view active" data-panel="dashboard">
+          <div class="welcome-card"><div><span>GESTIÓN DE CONTENIDO</span><h1>Todo el sitio en un solo lugar</h1><p>Actualiza publicaciones, fotografías, formularios, eventos y servicios sin editar el código de la landing.</p></div><div class="welcome-art"><i class="bi bi-trophy-fill"></i><i class="bi bi-lightning-charge-fill"></i></div></div>
+          <div class="stats-grid" id="statsGrid"></div>
+          <div class="dashboard-grid">
+            <article class="panel-card"><div class="panel-head"><div><span class="panel-icon blue"><i class="bi bi-lightning-fill"></i></span><div><h3>Acciones rápidas</h3><p>Publica contenido en segundos.</p></div></div></div><div class="quick-actions"><button data-quick="calls"><i class="bi bi-megaphone"></i><span>Nueva convocatoria</span></button><button data-quick="events"><i class="bi bi-calendar-plus"></i><span>Nuevo evento</span></button><button data-quick="services"><i class="bi bi-plus-circle"></i><span>Nuevo servicio</span></button><button data-quick="carousel"><i class="bi bi-image"></i><span>Agregar fotografía</span></button></div></article>
+            <article class="panel-card"><div class="panel-head"><div><span class="panel-icon green"><i class="bi bi-clock-history"></i></span><div><h3>Estado del sitio</h3><p>Resumen de la publicación.</p></div></div></div><div class="status-list"><div><span>Última actualización</span><b id="lastUpdate">Sin cambios</b></div><div><span>Modo de almacenamiento</span><b>Local / Demo</b></div><div><span>Sitio público</span><b class="ok"><i class="bi bi-check-circle-fill"></i> Disponible</b></div></div></article>
+          </div>
+        </section>
+
+        <section class="admin-view" data-panel="carousel"><div class="view-head"><div><span class="view-kicker">Portada</span><h1>Carrousel principal</h1><p>Administra las fotografías y mensajes que aparecen al inicio de la landing.</p></div><button class="primary-btn" data-add="carousel"><i class="bi bi-plus-lg"></i> Agregar fotografía</button></div><div class="content-grid media-grid" id="carouselList"></div></section>
+        <section class="admin-view" data-panel="calls"><div class="view-head"><div><span class="view-kicker">Participación</span><h1>Convocatorias</h1><p>Publica convocatorias con imagen, resumen, categoría, fecha y enlace.</p></div><button class="primary-btn" data-add="calls"><i class="bi bi-plus-lg"></i> Nueva convocatoria</button></div><div class="content-table-card"><div class="toolbar"><div class="search-box"><i class="bi bi-search"></i><input data-search="calls" placeholder="Buscar convocatoria..."></div></div><div class="admin-list" id="callsList"></div></div></section>
+        <section class="admin-view" data-panel="forms"><div class="view-head"><div><span class="view-kicker">Inscripciones</span><h1>Formularios</h1><p>Publica formatos PDF, enlaces de Google Forms o formularios externos.</p></div><button class="primary-btn" data-add="forms"><i class="bi bi-plus-lg"></i> Agregar formulario</button></div><div class="content-table-card"><div class="admin-list" id="formsList"></div></div></section>
+        <section class="admin-view" data-panel="events"><div class="view-head"><div><span class="view-kicker">Agenda</span><h1>Calendario de actividades</h1><p>Registra eventos, torneos, cursos, horarios y ubicaciones.</p></div><button class="primary-btn" data-add="events"><i class="bi bi-plus-lg"></i> Nuevo evento</button></div><div class="content-table-card"><div class="toolbar"><div class="search-box"><i class="bi bi-search"></i><input data-search="events" placeholder="Buscar evento..."></div></div><div class="admin-list" id="eventsList"></div></div></section>
+        <section class="admin-view" data-panel="services"><div class="view-head"><div><span class="view-kicker">Oferta institucional</span><h1>Servicios, cursos y costos</h1><p>Agrega opciones como alberca, cursos, instalaciones, escuelas deportivas y cuotas.</p></div><button class="primary-btn" data-add="services"><i class="bi bi-plus-lg"></i> Nuevo servicio</button></div><div class="content-grid" id="servicesList"></div></section>
+        <section class="admin-view" data-panel="docs"><div class="view-head"><div><span class="view-kicker">Transparencia</span><h1>Documentos públicos</h1><p>Administra avisos de privacidad, reglamentos, manuales y enlaces de transparencia.</p></div><button class="primary-btn" data-add="docs"><i class="bi bi-plus-lg"></i> Nuevo documento</button></div><div class="content-table-card"><div class="admin-list" id="docsList"></div></div></section>
+        <section class="admin-view" data-panel="institutional"><div class="view-head"><div><span class="view-kicker">Conócenos</span><h1>Información institucional</h1><p>Edita la misión y visión que aparecen en la landing.</p></div></div><div class="institutional-editor panel-card"><form id="institutionalForm" class="form-grid"><label>Título principal<input name="heroTitlePrefix"></label><label>Texto destacado<input name="heroTitleAccent"></label><label class="wide">Descripción de portada<textarea name="heroLead" rows="3"></textarea></label><label>Facebook<input name="facebook"></label><label>Domicilio / ciudad<input name="address"></label><label class="wide">Título de Misión<input name="missionTitle"></label><label class="wide">Misión<textarea name="missionText" rows="5"></textarea></label><label class="wide">Título de Visión<input name="visionTitle"></label><label class="wide">Visión<textarea name="visionText" rows="5"></textarea></label><div class="form-actions wide"><button type="submit" class="primary-btn"><i class="bi bi-check2"></i> Guardar cambios</button></div></form></div></section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header class="modal-head"><div><span id="modalKicker">Administrar</span><h2 id="modalTitle">Nuevo elemento</h2></div><button type="button" class="icon-btn" id="closeModal"><i class="bi bi-x-lg"></i></button></header>
+      <form id="modalForm"><div class="modal-body" id="modalFields"></div><footer class="modal-foot"><button type="button" class="secondary-btn" id="cancelModal">Cancelar</button><button type="submit" class="primary-btn"><i class="bi bi-check2"></i> Guardar</button></footer></form>
+    </section>
+  </div>
+
+  <div class="toast" id="adminToast"></div>
+  <script src="assets/js/cms.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
