@@ -11,6 +11,8 @@
   function toast(msg){const el=$('#adminToast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),3000)}
   function showError(msg=''){const el=$('#authError');el.textContent=msg;el.hidden=!msg}
   function setBusy(btn,on,text='Guardando…'){if(!btn)return;btn.disabled=on;if(on){btn.dataset.old=btn.innerHTML;btn.innerHTML=`<span class="spinner"></span>${text}`}else if(btn.dataset.old){btn.innerHTML=btn.dataset.old;delete btn.dataset.old}}
+  function resetModalSubmit(){const b=$('#modalSubmit'),c=$('#cancelModal'),x=$('#closeModal');if(b){b.disabled=false;if(b.dataset.old){b.innerHTML=b.dataset.old;delete b.dataset.old}}if(c)c.disabled=false;if(x)x.disabled=false}
+  function showModal(mode){const back=$('#modalBackdrop'),body=$('#modalFields');resetModalSubmit();$('#modalForm').dataset.mode=mode;back.hidden=false;document.body.classList.add('modal-open');if(body)body.scrollTop=0;requestAnimationFrame(()=>{const first=$('#modalFields input:not([type=hidden]):not([disabled]), #modalFields select:not([disabled]), #modalFields textarea:not([disabled])');first?.focus({preventScroll:true})})}
   function can(key){return key?CMS.can(profile,key):true}
   function status(active){return `<span class="status-chip ${active===false?'off':''}">${active===false?'Oculto':'Publicado'}</span>`}
   function fmtDate(v){if(!v)return 'Sin fecha';const d=new Date(v+'T12:00:00');return Number.isNaN(d.getTime())?v:new Intl.DateTimeFormat('es-MX',{day:'2-digit',month:'short',year:'numeric'}).format(d)}
@@ -101,9 +103,9 @@
     const sch=schemas[type];if(!sch||!can(sch.permission))return toast('Tu rol no tiene permiso para este módulo.');
     currentType=type;currentId=id;const item=id?(data[type]||[]).find(x=>x.id===id)||{}:{};
     $('#modalKicker').textContent=sch.kicker;$('#modalTitle').textContent=`${id?'Editar':'Nuevo'} ${sch.title.toLowerCase()}`;$('#modalFields').innerHTML=sch.fields.map(f=>fieldHtml(f,item[f[0]])).join('');
-    $('#modalBackdrop').hidden=false;document.body.style.overflow='hidden';$('#modalForm').dataset.mode='content';
+    showModal('content');
   }
-  function closeModal(){currentType=null;currentId=null;$('#modalBackdrop').hidden=true;document.body.style.overflow='';$('#modalForm').reset();delete $('#modalForm').dataset.mode}
+  function closeModal(){currentType=null;currentId=null;const back=$('#modalBackdrop'),form=$('#modalForm');back.hidden=true;document.body.classList.remove('modal-open');form.reset();$('#modalFields').innerHTML='';delete form.dataset.mode;resetModalSubmit()}
   async function compressImage(file){if(!file||!file.type.startsWith('image/'))return file;return await new Promise((resolve,reject)=>{const img=new Image(),r=new FileReader();r.onload=()=>{img.onload=()=>{const max=1800,scale=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);c.getContext('2d').drawImage(img,0,0,c.width,c.height);c.toBlob(blob=>blob?resolve(new File([blob],file.name.replace(/\.[^.]+$/,'.jpg'),{type:'image/jpeg'})):reject(new Error('No fue posible preparar la imagen.')),'image/jpeg',.86)};img.onerror=reject;img.src=r.result};r.onerror=reject;r.readAsDataURL(file)})}
 
   function bindActions(){
@@ -117,7 +119,7 @@
   }
 
   $('#modalForm').addEventListener('submit',async e=>{
-    e.preventDefault();const mode=e.currentTarget.dataset.mode,submit=$('#modalSubmit');setBusy(submit,true);
+    e.preventDefault();const mode=e.currentTarget.dataset.mode,submit=$('#modalSubmit');setBusy(submit,true);$('#cancelModal').disabled=true;$('#closeModal').disabled=true;
     try{
       if(mode==='content'){
         const type=currentType,sch=schemas[type],fd=new FormData(e.currentTarget),existing=currentId?(data[type]||[]).find(x=>x.id===currentId):null,obj=existing?{...existing}:{id:CMS.uid(type)};
@@ -128,20 +130,20 @@
       }else if(mode==='user'){await saveUserFromModal(e.currentTarget);closeModal();[users,invites]=await Promise.all([CMS.listUsers(),CMS.listInvites()]);renderUsers();renderInvites();bindActions();toast('Usuario actualizado')}
       else if(mode==='invite'){await saveInviteFromModal(e.currentTarget);closeModal();invites=await CMS.listInvites();renderInvites();bindActions()}
       else if(mode==='role'){await saveRoleFromModal(e.currentTarget);closeModal();roles=await CMS.listRoles();renderRoles();bindActions();toast('Rol guardado')}
-    }catch(err){toast(err.message||'No fue posible guardar')}finally{setBusy(submit,false)}
+    }catch(err){toast(err.message||'No fue posible guardar')}finally{setBusy(submit,false);$('#cancelModal').disabled=false;$('#closeModal').disabled=false}
   });
 
-  function openUserModal(id){const u=users.find(x=>x.id===id);if(!u)return;currentId=id;$('#modalKicker').textContent='Usuarios';$('#modalTitle').textContent='Editar usuario';$('#modalFields').innerHTML=`<label>Nombre<input name="full_name" value="${esc(u.full_name||'')}"></label><label>Usuario<input name="username" value="${esc(u.username||'')}" required></label><label class="wide">Correo<input value="${esc(u.email||'')}" disabled></label><label>Rol<select name="role_id" required>${roles.map(r=>`<option value="${r.id}" ${r.id===u.role_id?'selected':''}>${esc(r.name)}</option>`).join('')}</select></label><label class="checkline"><input type="checkbox" name="active" ${u.active!==false?'checked':''}> Acceso activo</label>`;$('#modalBackdrop').hidden=false;document.body.style.overflow='hidden';$('#modalForm').dataset.mode='user'}
+  function openUserModal(id){const u=users.find(x=>x.id===id);if(!u)return;currentId=id;$('#modalKicker').textContent='Usuarios';$('#modalTitle').textContent='Editar usuario';$('#modalFields').innerHTML=`<label>Nombre<input name="full_name" value="${esc(u.full_name||'')}"></label><label>Usuario<input name="username" value="${esc(u.username||'')}" required></label><label class="wide">Correo<input value="${esc(u.email||'')}" disabled></label><label>Rol<select name="role_id" required>${roles.map(r=>`<option value="${r.id}" ${r.id===u.role_id?'selected':''}>${esc(r.name)}</option>`).join('')}</select></label><label class="checkline"><input type="checkbox" name="active" ${u.active!==false?'checked':''}> Acceso activo</label>`;showModal('user')}
   async function saveUserFromModal(form){const fd=new FormData(form);await CMS.updateUser(currentId,{full_name:fd.get('full_name')||'',username:fd.get('username')||'',role_id:fd.get('role_id'),active:form.elements.active.checked})}
-  function openInviteModal(){currentId=null;$('#modalKicker').textContent='Usuarios';$('#modalTitle').textContent='Invitar usuario';$('#modalFields').innerHTML=`<label>Correo<input name="email" type="email" required></label><label>Usuario<input name="username" required placeholder="nombre.apellido"></label><label>Rol<select name="role_id" required>${roles.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join('')}</select></label><label>Vigencia<select name="days"><option value="3">3 días</option><option value="7" selected>7 días</option><option value="14">14 días</option><option value="30">30 días</option></select></label><div class="wide modal-info"><i class="bi bi-link-45deg"></i><span>Se generará un enlace único para que la persona invitada configure su acceso.</span></div>`;$('#modalBackdrop').hidden=false;document.body.style.overflow='hidden';$('#modalForm').dataset.mode='invite'}
+  function openInviteModal(){currentId=null;$('#modalKicker').textContent='Usuarios';$('#modalTitle').textContent='Invitar usuario';$('#modalFields').innerHTML=`<label>Correo<input name="email" type="email" required></label><label>Usuario<input name="username" required placeholder="nombre.apellido"></label><label>Rol<select name="role_id" required>${roles.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join('')}</select></label><label>Vigencia<select name="days"><option value="3">3 días</option><option value="7" selected>7 días</option><option value="14">14 días</option><option value="30">30 días</option></select></label><div class="wide modal-info"><i class="bi bi-link-45deg"></i><span>Se generará un enlace único para que la persona invitada configure su acceso.</span></div>`;showModal('invite')}
   async function saveInviteFromModal(form){const fd=new FormData(form),invite=await CMS.createInvite({email:fd.get('email'),username:fd.get('username'),role_id:fd.get('role_id'),days:fd.get('days')});const u=new URL('register.html',location.href);u.searchParams.set('token',invite.token);await navigator.clipboard.writeText(u.href).catch(()=>{});toast('Invitación creada y enlace copiado')}
 
-  function openRoleModal(id=null){const r=id?roles.find(x=>x.id===id):null;currentId=id;$('#modalKicker').textContent='Roles y permisos';$('#modalTitle').textContent=id?'Editar rol':'Nuevo rol';$('#modalFields').innerHTML=`<label>Nombre<input name="name" value="${esc(r?.name||'')}" required></label><label>Código<input name="code" value="${esc(r?.code||'')}" ${r?.is_system?'readonly':''} placeholder="ej. comunicacion" required></label><label class="wide">Descripción<textarea name="description" rows="3">${esc(r?.description||'')}</textarea></label><div class="wide permission-editor"><b>Permisos del rol</b><p>Selecciona los módulos que podrá modificar.</p>${Object.entries(permissionLabels).map(([k,v])=>`<label><input type="checkbox" name="perm_${k}" ${r?.permissions?.[k]?'checked':''}> <span>${v}</span></label>`).join('')}</div>`;$('#modalBackdrop').hidden=false;document.body.style.overflow='hidden';$('#modalForm').dataset.mode='role'}
+  function openRoleModal(id=null){const r=id?roles.find(x=>x.id===id):null;currentId=id;$('#modalKicker').textContent='Roles y permisos';$('#modalTitle').textContent=id?'Editar rol':'Nuevo rol';$('#modalFields').innerHTML=`<label>Nombre<input name="name" value="${esc(r?.name||'')}" required></label><label>Código<input name="code" value="${esc(r?.code||'')}" ${r?.is_system?'readonly':''} placeholder="ej. comunicacion" required></label><label class="wide">Descripción<textarea name="description" rows="3">${esc(r?.description||'')}</textarea></label><div class="wide permission-editor"><b>Permisos del rol</b><p>Selecciona los módulos que podrá modificar.</p>${Object.entries(permissionLabels).map(([k,v])=>`<label><input type="checkbox" name="perm_${k}" ${r?.permissions?.[k]?'checked':''}> <span>${v}</span></label>`).join('')}</div>`;showModal('role')}
   async function saveRoleFromModal(form){const fd=new FormData(form),existing=currentId?roles.find(x=>x.id===currentId):null,permissions={};Object.keys(permissionLabels).forEach(k=>permissions[k]=!!form.elements['perm_'+k]?.checked);const role={id:existing?.id,code:String(fd.get('code')||'').trim().toLowerCase().replace(/[^a-z0-9_-]+/g,'-'),name:fd.get('name'),description:fd.get('description')||'',permissions,is_system:existing?.is_system||false};await CMS.saveRole(role)}
 
   async function openPanel(){
     profile=await CMS.getProfile();if(!profile||profile.active===false){await CMS.signOut();throw new Error('Tu acceso no está activo.');}
-    $('#authShell').hidden=true;$('#adminShell').hidden=false;$('#adminName').textContent=profile.full_name||profile.username||'Administrador';$('#adminEmail').textContent=profile.email||'';$('#adminAvatar').textContent=(profile.full_name||profile.username||'A').charAt(0).toUpperCase();
+    $('#authLoading').hidden=true;$('#setupView').hidden=true;$('#loginView').hidden=true;$('#authShell').hidden=true;$('#adminShell').hidden=false;document.body.classList.remove('modal-open');$('#adminName').textContent=profile.full_name||profile.username||'Administrador';$('#adminEmail').textContent=profile.email||'';$('#adminAvatar').textContent=(profile.full_name||profile.username||'A').charAt(0).toUpperCase();
     applyPermissions();
     data=await CMS.loadAdmin();
     if(can('users'))users=await CMS.listUsers();
@@ -151,7 +153,7 @@
   }
 
   async function initAuth(){
-    $('#authLoading').hidden=false;showError('');
+    $('#adminShell').hidden=true;$('#authShell').hidden=false;$('#setupView').hidden=true;$('#loginView').hidden=true;$('#authLoading').hidden=false;showError('');
     try{
       const session=await CMS.getSession();
       if(session){try{if(await CMS.bootstrapStatus())await CMS.claimFirstAdmin()}catch(_){}await openPanel();return;}
@@ -168,7 +170,7 @@
   $$('[data-add]').forEach(b=>b.addEventListener('click',()=>openContentModal(b.dataset.add)));
   $$('[data-quick]').forEach(b=>b.addEventListener('click',()=>{const type=b.dataset.quick;switchView(type);setTimeout(()=>openContentModal(type),80)}));
   $$('[data-search]').forEach(i=>i.addEventListener('input',()=>{const q=i.value,type=i.dataset.search;if(type==='announcements')renderAnnouncements(q);if(type==='tournaments')renderTournaments(q);if(type==='calls')renderCalls(q);if(type==='events')renderEvents(q);bindActions()}));
-  $('#closeModal').onclick=closeModal;$('#cancelModal').onclick=closeModal;$('#modalBackdrop').addEventListener('click',e=>{if(e.target===$('#modalBackdrop'))closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modalBackdrop').hidden)closeModal()});
+  $('#closeModal').onclick=closeModal;$('#cancelModal').onclick=closeModal;$('#modalBackdrop').addEventListener('click',e=>{if(e.target===$('#modalBackdrop')&&!$('#modalSubmit').disabled)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modalBackdrop').hidden&&!$('#modalSubmit').disabled)closeModal()});
   $('#inviteUserBtn')?.addEventListener('click',openInviteModal);$('#addRoleBtn')?.addEventListener('click',()=>openRoleModal());
   $('#institutionalForm')?.addEventListener('submit',async e=>{e.preventDefault();const b=e.submitter,fd=new FormData(e.currentTarget),site={...data.site};['heroTitlePrefix','heroTitleAccent','heroLead','facebook','address','missionTitle','missionText','visionTitle','visionText'].forEach(k=>site[k]=fd.get(k)||'');setBusy(b,true);try{data.site=await CMS.saveSite(site);data.updatedAt=new Date().toISOString();renderStats();toast('Información institucional actualizada')}catch(err){toast(err.message||'No fue posible guardar')}finally{setBusy(b,false)}});
 
