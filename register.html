@@ -28,7 +28,7 @@
           <label>Confirmar contraseña<input name="confirm" type="password" minlength="8" required></label>
           <button class="primary-btn" type="submit">Crear acceso <i class="bi bi-shield-check"></i></button>
         </form>
-        <div class="auth-note"><i class="bi bi-info-circle"></i><span>Si la confirmación por correo está activa en Supabase, recibirás un mensaje antes de poder ingresar.</span></div>
+        <div class="auth-note"><i class="bi bi-info-circle"></i><span>Puede ser necesario verificar tu correo antes de ingresar por primera vez.</span></div><div class="register-links"><a class="back-site" href="index.html"><i class="bi bi-arrow-left"></i> Volver al sitio</a><a class="back-site" href="admin.html">Ir al acceso <i class="bi bi-arrow-right"></i></a></div>
       </div>
       <div id="registerMessage" class="auth-error" hidden></div>
     </div>
@@ -43,7 +43,7 @@
     if(!token)return invalid('El enlace no contiene un token de invitación.');
     try{invite=await CMS.getInvite(token);if(!invite||!invite.valid)return invalid();$('#inviteLoading').hidden=true;$('#inviteView').hidden=false;$('#inviteUsername').textContent=invite.username;$('#inviteEmail').textContent=invite.email;$('#inviteRole').textContent=invite.role_name}
     catch(e){return invalid(e.message)}
-    $('#registerForm').addEventListener('submit',async e=>{e.preventDefault();const f=new FormData(e.currentTarget),msg=$('#registerMessage'),b=e.currentTarget.querySelector('button');msg.hidden=true;if(f.get('password')!==f.get('confirm')){msg.textContent='Las contraseñas no coinciden.';msg.hidden=false;return}b.disabled=true;b.innerHTML='<span class="spinner"></span> Creando…';try{const r=await CMS.registerInvite({token,email:invite.email,username:invite.username,fullName:f.get('fullName'),password:f.get('password')});if(r.session){location.href='admin.html'}else{$('#inviteView').innerHTML='<span class="auth-eyebrow">Cuenta creada</span><h1>Revisa tu correo</h1><p>La cuenta fue creada. Confirma el mensaje enviado por Supabase y después ingresa al panel administrativo.</p><a class="primary-btn" href="admin.html">Ir al Login</a>'}}catch(err){msg.textContent=err.message||'No fue posible crear el acceso.';msg.hidden=false;b.disabled=false;b.innerHTML='Crear acceso <i class="bi bi-shield-check"></i>'}})
+    $('#registerForm').addEventListener('submit',async e=>{e.preventDefault();const f=new FormData(e.currentTarget),msg=$('#registerMessage'),b=e.currentTarget.querySelector('button');msg.hidden=true;if(f.get('password')!==f.get('confirm')){msg.textContent='Las contraseñas no coinciden.';msg.hidden=false;return}b.disabled=true;b.innerHTML='<span class="spinner"></span> Creando…';try{const r=await CMS.registerInvite({token,email:invite.email,username:invite.username,fullName:f.get('fullName'),password:f.get('password')});if(r.session){location.href='admin.html'}else{$('#inviteView').innerHTML='<span class="auth-eyebrow">Cuenta creada</span><h1>Revisa tu correo</h1><p>La cuenta fue creada. Revisa tu correo y sigue las instrucciones recibidas para completar el acceso.</p><a class="primary-btn" href="admin.html">Ir al Login</a>'}}catch(err){msg.textContent=err.message||'No fue posible crear el acceso.';msg.hidden=false;b.disabled=false;b.innerHTML='Crear acceso <i class="bi bi-shield-check"></i>'}})
   })();
   </script>
 </body>

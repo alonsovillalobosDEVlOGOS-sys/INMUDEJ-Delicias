@@ -7,7 +7,6 @@
   document.title=`${title} | INMUDEJ Delicias`;
   const frame=document.getElementById('pdfFrame'),missing=document.getElementById('missingDoc');
   const open=document.getElementById('openBtn'),download=document.getElementById('downloadBtn');
-  document.getElementById('expectedPath').textContent=safe?file:'Ruta no válida';
   if(!safe){frame.style.display='none';missing.classList.add('show');open.style.display=download.style.display='none';return}
   open.href=file;download.href=file;
   try{

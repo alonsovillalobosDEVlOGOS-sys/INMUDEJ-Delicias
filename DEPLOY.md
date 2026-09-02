@@ -1,29 +1,42 @@
-# Publicación en GitHub y Vercel
+# Deploy GitHub + Vercel
 
-## Opción A — GitHub Pages
+## Antes de desplegar
 
-1. Crea un repositorio, por ejemplo `inmudej-delicias`.
-2. Sube **todo el contenido** de esta carpeta a la raíz del repositorio.
-3. En GitHub entra a **Settings → Pages**.
-4. En **Build and deployment** selecciona `Deploy from a branch`.
-5. Elige `main` y carpeta `/ (root)`.
-6. Guarda. GitHub publicará la URL del sitio.
+1. Ejecuta, en orden, `supabase/migrations/001_inmudej_cms.sql` y `supabase/migrations/002_inmudej_cms_v4.sql`.
+2. Abre `admin.html` en un entorno de prueba y crea el primer administrador `admin`.
+3. Confirma que el bootstrap queda cerrado al ingresar correctamente.
+4. Revisa `assets/js/config.js`.
+5. Nunca subas contraseñas de PostgreSQL ni claves `service_role`/secret al repositorio.
 
-> Si el repositorio no está en la raíz de un dominio, los enlaces funcionan porque el proyecto usa rutas relativas.
+## GitHub
 
-## Opción B — Vercel
+Sube el contenido completo de esta carpeta al repositorio. La raíz debe contener `index.html` y `vercel.json`.
 
-1. Importa el repositorio desde `vercel.com/new`.
+## Vercel
+
+1. Importa el repositorio.
 2. Framework Preset: **Other**.
-3. Build Command: dejar vacío.
-4. Output Directory: dejar vacío (raíz del proyecto).
+3. Build Command: vacío.
+4. Output Directory: `.`
 5. Deploy.
 
-El archivo `vercel.json` agrega encabezados básicos de seguridad y caché para imágenes/PDF.
+## Supabase Auth
 
-## Actualizaciones posteriores
+Después de conocer el dominio final:
 
-- **PDFs:** agrega o reemplaza archivos en `assets/pdfs/`.
-- **Calendario:** edita `assets/data/activities.json`.
-- **Fracciones ICHITAIP:** edita `assets/data/fracciones.json` y carga los archivos en `assets/pdfs/ichitaip/`.
-- **Imágenes:** reemplaza archivos dentro de `assets/img/` conservando los nombres para no editar HTML.
+1. Ve a Authentication > URL Configuration.
+2. Define `Site URL` con el dominio de Vercel.
+3. Añade URLs de redirección de preview sólo si las necesitas.
+
+## Pruebas finales
+
+- `/` carga el carrousel sin áreas blancas.
+- El botón **Login** abre el modal.
+- `admin` puede iniciar sesión.
+- El panel muestra el rol correcto.
+- Subir una imagen crea un archivo en `inmudej-public`.
+- Crear un aviso, torneo o convocatoria lo refleja en la landing.
+- Agregar una fotografía a un servicio la refleja en la tarjeta pública.
+- Crear un evento lo refleja en el calendario.
+- Invitar un usuario genera una URL de `register.html?token=...`.
+- Un editor no ve Usuarios/Roles si no tiene permiso.

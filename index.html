@@ -29,11 +29,15 @@
         <a class="active" href="#inicio">Inicio</a>
         <a href="#conocenos">Conócenos</a>
         <a href="#servicios">Servicios</a>
-        <a href="#transparencia">Transparencia</a>
+        <a href="#torneos">Torneos</a>
+        <a href="#convocatorias">Convocatorias</a>
         <a href="#calendario">Calendario</a>
-        <a href="#publicaciones">Publicaciones</a>
+        <a href="#transparencia">Transparencia</a>
       </div>
-      <a class="btn btn-primary nav-cta" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener"><i class="bi bi-facebook"></i><span>Facebook</span></a>
+      <div class="nav-actions">
+        <a class="nav-social" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener" aria-label="Facebook de INMUDEJ" data-facebook-link><i class="bi bi-facebook"></i></a>
+        <a class="btn btn-login nav-cta" href="admin.html" id="loginBtn"><i class="bi bi-person-lock"></i><span>Login</span></a>
+      </div>
     </div>
   </nav>
 
@@ -44,8 +48,8 @@
     <div class="container hero-grid">
       <div class="hero-copy reveal in">
         <div class="badge"><i class="bi bi-trophy"></i> Instituto Municipal del Deporte y la Juventud</div>
-        <h1>Deporte y juventud que <span>mueven a Delicias.</span></h1>
-        <p class="lead">Un espacio para acercar actividades, servicios, programas y oportunidades que fortalecen la activación física, la convivencia y el desarrollo integral de niñas, niños, jóvenes y familias del municipio.</p>
+        <h1><span id="heroTitlePrefix">Deporte y juventud que</span> <span id="heroTitleAccent">mueven a Delicias.</span></h1>
+        <p class="lead" id="heroLead">Un espacio para acercar actividades, servicios, programas y oportunidades que fortalecen la activación física, la convivencia y el desarrollo integral de niñas, niños, jóvenes y familias del municipio.</p>
         <div class="hero-actions">
           <a class="btn btn-primary btn-lg" href="#calendario">Ver próximas actividades <i class="bi bi-arrow-right"></i></a>
           <a class="btn btn-outline btn-lg" href="#servicios">Conocer servicios <i class="bi bi-grid"></i></a>
@@ -58,11 +62,18 @@
       </div>
 
       <div class="hero-visual reveal in">
-        <div class="hero-photo-card">
-          <img src="assets/img/natacion-inmudej.jpg" alt="Actividad de natación promovida por INMUDEJ Delicias">
-          <div class="hero-photo-shade"></div>
+        <div class="hero-carousel" id="heroCarousel" aria-label="Galería destacada de INMUDEJ">
+          <div class="hero-carousel-track" id="heroCarouselTrack">
+            <article class="hero-slide active" aria-hidden="false">
+              <img src="assets/img/natacion-inmudej.jpg" alt="Actividades deportivas de INMUDEJ">
+              <div class="hero-photo-shade"></div>
+              <div class="hero-photo-label"><i class="bi bi-people-fill"></i><div><b>Más actividad. Más comunidad.</b><span>Deporte, juventud e inclusión para Delicias.</span></div></div>
+            </article>
+          </div>
+          <button class="carousel-arrow prev" id="heroPrev" type="button" aria-label="Imagen anterior"><i class="bi bi-chevron-left"></i></button>
+          <button class="carousel-arrow next" id="heroNext" type="button" aria-label="Imagen siguiente"><i class="bi bi-chevron-right"></i></button>
+          <div class="carousel-dots" id="heroDots" aria-label="Selector de imágenes"></div>
           <div class="hero-photo-brand"><img src="assets/img/inmudej-logo.png" alt="INMUDEJ Delicias"></div>
-          <div class="hero-photo-label"><i class="bi bi-people-fill"></i><div><b>Más actividad. Más comunidad.</b><span>Deporte, juventud e inclusión para Delicias.</span></div></div>
         </div>
       </div>
     </div>
@@ -78,26 +89,26 @@
   </section>
 
   <main id="contenido">
-    <section class="section" id="conocenos">
+    <section class="section" id="conocenos" data-managed-section="conocenos">
       <div class="container">
         <div class="section-head centered reveal">
-          <span class="eyebrow">Conócenos</span>
-          <h2>Impulsamos el deporte, la cultura física y el desarrollo de la juventud</h2>
-          <p>INMUDEJ es el organismo municipal que articula acciones para acercar el deporte y oportunidades de desarrollo a la población de Delicias.</p>
+          <span class="eyebrow" data-section-eyebrow="conocenos">Conócenos</span>
+          <h2 data-section-title="conocenos">Impulsamos el deporte, la cultura física y el desarrollo de la juventud</h2>
+          <p data-section-description="conocenos">INMUDEJ es el organismo municipal que articula acciones para acercar el deporte y oportunidades de desarrollo a la población de Delicias.</p>
         </div>
 
         <div class="purpose-grid">
           <article class="purpose-card mission reveal">
             <div class="purpose-icon"><i class="bi bi-bullseye"></i></div>
             <span class="purpose-label">Misión</span>
-            <h3>Promover una vida activa y un desarrollo integral</h3>
-            <p>Planear, promover, desarrollar, vigilar, fomentar y estimular la práctica y enseñanza del deporte, la cultura física y el desarrollo integral de la población del Municipio de Delicias, acercando programas y acciones con sentido comunitario.</p>
+            <h3 id="missionTitle">Promover una vida activa y un desarrollo integral</h3>
+            <p id="missionText">Planear, promover, desarrollar, vigilar, fomentar y estimular la práctica y enseñanza del deporte, la cultura física y el desarrollo integral de la población del Municipio de Delicias, acercando programas y acciones con sentido comunitario.</p>
           </article>
           <article class="purpose-card vision reveal">
             <div class="purpose-icon"><i class="bi bi-eye"></i></div>
             <span class="purpose-label">Visión</span>
-            <h3>Un Delicias con más oportunidades para activarse y crecer</h3>
-            <p>Consolidar un instituto cercano, incluyente y dinámico, reconocido por fortalecer el deporte municipal y generar espacios, programas y experiencias que impulsen el talento, la participación juvenil, la convivencia y hábitos saludables.</p>
+            <h3 id="visionTitle">Un Delicias con más oportunidades para activarse y crecer</h3>
+            <p id="visionText">Consolidar un instituto cercano, incluyente y dinámico, reconocido por fortalecer el deporte municipal y generar espacios, programas y experiencias que impulsen el talento, la participación juvenil, la convivencia y hábitos saludables.</p>
           </article>
         </div>
 
@@ -109,64 +120,75 @@
       </div>
     </section>
 
-    <section class="section section-soft" id="servicios">
+    <section class="section announcements-section" id="avisos" data-managed-section="announcements" hidden>
       <div class="container">
         <div class="section-head centered reveal">
-          <span class="eyebrow">Servicios</span>
-          <h2>Atención y programas para una comunidad activa</h2>
-          <p>Consulta las principales líneas de atención del Instituto. Las convocatorias, requisitos y sedes específicas se publican en el calendario y en las redes oficiales.</p>
+          <span class="eyebrow" data-section-eyebrow="announcements">Avisos destacados</span>
+          <h2 data-section-title="announcements">Información importante para nuestra comunidad</h2>
+          <p data-section-description="announcements">Consulta anuncios, cambios, recordatorios y comunicados relevantes del Instituto.</p>
         </div>
-        <div class="services-grid">
-          <article class="service-card reveal"><span class="service-icon blue"><i class="bi bi-trophy"></i></span><h3>Ligas, torneos y competencias</h3><p>Organización y acompañamiento de actividades deportivas municipales, escolares y comunitarias.</p><a href="#calendario">Consultar actividades <i class="bi bi-arrow-right"></i></a></article>
-          <article class="service-card reveal"><span class="service-icon green"><i class="bi bi-person-running"></i></span><h3>Activación física y escuelas deportivas</h3><p>Programas para fomentar hábitos saludables, iniciación deportiva y práctica constante en distintas disciplinas.</p><a href="#publicaciones">Ver convocatorias <i class="bi bi-arrow-right"></i></a></article>
-          <article class="service-card reveal"><span class="service-icon orange"><i class="bi bi-award"></i></span><h3>Impulso a deportistas y entrenadores</h3><p>Orientación y vinculación para fortalecer procesos de formación, participación y representación deportiva.</p><a href="#publicaciones">Conocer avisos <i class="bi bi-arrow-right"></i></a></article>
-          <article class="service-card reveal"><span class="service-icon purple"><i class="bi bi-people-fill"></i></span><h3>Programas para juventudes</h3><p>Actividades de participación, integración, reconocimiento y desarrollo para jóvenes de Delicias.</p><a href="#calendario">Explorar agenda <i class="bi bi-arrow-right"></i></a></article>
-          <article class="service-card reveal"><span class="service-icon cyan"><i class="bi bi-building"></i></span><h3>Espacios e instalaciones deportivas</h3><p>Información sobre actividades y servicios que se desarrollan en instalaciones deportivas municipales.</p><a href="#publicaciones">Consultar información <i class="bi bi-arrow-right"></i></a></article>
-          <article class="service-card reveal"><span class="service-icon amber"><i class="bi bi-hearts"></i></span><h3>Integración e inclusión</h3><p>Acciones que utilizan el deporte como herramienta para convivencia, inclusión, bienestar y fortalecimiento comunitario.</p><a href="#publicaciones">Conocer programas <i class="bi bi-arrow-right"></i></a></article>
+        <div class="announcements-grid" id="announcementsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="servicios" data-managed-section="services">
+      <div class="container">
+        <div class="section-head centered reveal">
+          <span class="eyebrow" data-section-eyebrow="services">Servicios</span>
+          <h2 data-section-title="services">Atención y programas para una comunidad activa</h2>
+          <p data-section-description="services">Consulta servicios, cursos, instalaciones, horarios, requisitos y cuotas vigentes.</p>
+        </div>
+        <div class="services-grid" id="servicesGrid"></div>
+      </div>
+    </section>
+
+    <section class="section tournaments-section" id="torneos" data-managed-section="tournaments">
+      <div class="container">
+        <div class="section-head centered reveal">
+          <span class="eyebrow" data-section-eyebrow="tournaments">Torneos y competencias</span>
+          <h2 data-section-title="tournaments">Compite, participa y representa a Delicias</h2>
+          <p data-section-description="tournaments">Encuentra torneos, competencias y encuentros deportivos con fechas, sedes e información de inscripción.</p>
+        </div>
+        <div class="tournaments-grid" id="tournamentsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section opportunities-section section-soft" id="convocatorias" data-managed-section="calls">
+      <div class="container">
+        <div class="section-head centered reveal">
+          <span class="eyebrow" data-section-eyebrow="calls">Convocatorias e inscripciones</span>
+          <h2 data-section-title="calls">Participa en las próximas actividades de INMUDEJ</h2>
+          <p data-section-description="calls">Consulta convocatorias vigentes, requisitos y formularios de inscripción para competencias, cursos, torneos y programas.</p>
+        </div>
+        <div class="opportunities-grid" id="convocatoriasGrid"></div>
+        <div class="forms-panel reveal">
+          <div class="forms-panel-head"><div><span class="eyebrow">Formularios</span><h3>Inscripciones y documentos descargables</h3></div><i class="bi bi-file-earmark-arrow-down"></i></div>
+          <div class="forms-grid" id="formsGrid"></div>
         </div>
       </div>
     </section>
 
-    <section class="section transparency-section" id="transparencia">
+    <section class="section transparency-section" id="transparencia" data-managed-section="transparency">
       <div class="container">
         <div class="section-head centered reveal">
-          <span class="eyebrow">Transparencia</span>
-          <h2>Información pública y normatividad</h2>
-          <p>Accede a los documentos institucionales del INMUDEJ. La estructura ya está preparada para que los archivos PDF se carguen directamente en sus carpetas correspondientes.</p>
+          <span class="eyebrow" data-section-eyebrow="transparency">Transparencia</span>
+          <h2 data-section-title="transparency">Información pública y normatividad</h2>
+          <p data-section-description="transparency">Consulta avisos de privacidad, reglamentos, manuales y demás documentos institucionales del INMUDEJ.</p>
         </div>
-        <div class="documents-grid">
-          <a class="document-card reveal" href="visor-pdf.html?file=assets/pdfs/privacidad/aviso-privacidad-simplificado.pdf&title=Aviso%20Simplificado%20de%20Privacidad">
-            <span class="doc-icon privacy"><i class="bi bi-shield-check"></i></span><div><span class="doc-type">Privacidad</span><h3>Aviso Simplificado de Privacidad</h3><p>Documento de información básica sobre el tratamiento de datos personales.</p></div><span class="doc-action">Ver PDF <i class="bi bi-file-earmark-pdf"></i></span>
-          </a>
-          <a class="document-card reveal" href="visor-pdf.html?file=assets/pdfs/privacidad/aviso-privacidad-integral.pdf&title=Aviso%20de%20Privacidad%20Integral">
-            <span class="doc-icon privacy"><i class="bi bi-file-lock2"></i></span><div><span class="doc-type">Privacidad</span><h3>Aviso de Privacidad Integral</h3><p>Información completa sobre finalidades, derechos y tratamiento de datos.</p></div><span class="doc-action">Ver PDF <i class="bi bi-file-earmark-pdf"></i></span>
-          </a>
-          <a class="document-card reveal" href="fracciones-ichitaip.html">
-            <span class="doc-icon access"><i class="bi bi-list-check"></i></span><div><span class="doc-type">Obligaciones</span><h3>Fracciones ICHITAIP</h3><p>Sección preparada para organizar y publicar las obligaciones de transparencia aplicables.</p></div><span class="doc-action">Consultar <i class="bi bi-arrow-up-right"></i></span>
-          </a>
-          <a class="document-card reveal" href="visor-pdf.html?file=assets/pdfs/normatividad/reglamento-interior-inmudej.pdf&title=Reglamento%20Interior%20del%20INMUDEJ">
-            <span class="doc-icon rules"><i class="bi bi-journal-bookmark-fill"></i></span><div><span class="doc-type">Normatividad</span><h3>Reglamento Interior del INMUDEJ</h3><p>Bases de regulación, funcionamiento, atribuciones y facultades del Instituto.</p></div><span class="doc-action">Ver PDF <i class="bi bi-file-earmark-pdf"></i></span>
-          </a>
-          <a class="document-card reveal" href="visor-pdf.html?file=assets/pdfs/normatividad/acuerdo-creacion-inmudej.pdf&title=Acuerdo%20de%20Creación%20del%20INMUDEJ">
-            <span class="doc-icon rules"><i class="bi bi-bank"></i></span><div><span class="doc-type">Normatividad</span><h3>Acuerdo de Creación del INMUDEJ</h3><p>Instrumento de creación y fundamento del organismo público descentralizado.</p></div><span class="doc-action">Ver PDF <i class="bi bi-file-earmark-pdf"></i></span>
-          </a>
-          <a class="document-card reveal" href="visor-pdf.html?file=assets/pdfs/normatividad/manual-organizacion-inmudej.pdf&title=Manual%20de%20Organización%20del%20INMUDEJ">
-            <span class="doc-icon org"><i class="bi bi-diagram-3"></i></span><div><span class="doc-type">Organización</span><h3>Manual de Organización</h3><p>Estructura, funciones, responsabilidades y organización administrativa del Instituto.</p></div><span class="doc-action">Ver PDF <i class="bi bi-file-earmark-pdf"></i></span>
-          </a>
-        </div>
+        <div class="documents-grid" id="transparencyGrid"></div>
         <div class="transparency-callout reveal">
-          <div><i class="bi bi-info-circle"></i><span><b>Preparado para actualización sencilla.</b> Solo agrega los PDF con los nombres indicados en la carpeta <code>assets/pdfs/</code>; no es necesario modificar los enlaces del sitio.</span></div>
-          <a href="fracciones-ichitaip.html">Abrir módulo ICHITAIP <i class="bi bi-arrow-right"></i></a>
+          <div><i class="bi bi-shield-check"></i><span><b>Información institucional disponible.</b> Consulta documentos, obligaciones y normatividad vigente del Instituto.</span></div>
+          <a href="fracciones-ichitaip.html">Consultar Fracciones ICHITAIP <i class="bi bi-arrow-right"></i></a>
         </div>
       </div>
     </section>
 
-    <section class="section calendar-section section-soft" id="calendario">
+    <section class="section calendar-section section-soft" id="calendario" data-managed-section="calendar">
       <div class="container">
         <div class="section-head centered reveal">
-          <span class="eyebrow">Calendario de actividades</span>
-          <h2>Encuentra eventos, torneos, cursos y convocatorias</h2>
-          <p>El calendario se alimenta desde un archivo JSON editable, ideal para actualizar fechas sin tocar el diseño de la página.</p>
+          <span class="eyebrow" data-section-eyebrow="calendar">Calendario de actividades</span>
+          <h2 data-section-title="calendar">Encuentra eventos, torneos, cursos y convocatorias</h2>
+          <p data-section-description="calendar">Consulta la agenda actualizada de actividades del Instituto.</p>
         </div>
         <div class="calendar-shell reveal">
           <div class="calendar-toolbar">
@@ -185,18 +207,18 @@
             <aside class="upcoming-panel">
               <div class="upcoming-head"><span><i class="bi bi-calendar-event"></i></span><div><b>Próximas actividades</b><small>Agenda del Instituto</small></div></div>
               <div id="upcomingList" class="upcoming-list"></div>
-              <a class="social-mini-cta" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener"><i class="bi bi-facebook"></i><span>Consulta también las convocatorias en Facebook</span><i class="bi bi-arrow-up-right"></i></a>
+              <a class="social-mini-cta" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener" data-facebook-link><i class="bi bi-facebook"></i><span>Consulta también las convocatorias en Facebook</span><i class="bi bi-arrow-up-right"></i></a>
             </aside>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section social-section" id="publicaciones">
+    <section class="section social-section" id="publicaciones" data-managed-section="social">
       <div class="container">
         <div class="social-head reveal">
-          <div><span class="eyebrow light">INMUDEJ en Facebook</span><h2>Publicaciones, convocatorias y resultados</h2><p>Consulta directamente las publicaciones de la página oficial de INMUDEJ Delicias sin perder el contexto del sitio institucional.</p></div>
-          <a class="btn btn-white" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener"><i class="bi bi-facebook"></i> Abrir página oficial</a>
+          <div><span class="eyebrow light" data-section-eyebrow="social">INMUDEJ en Facebook</span><h2 data-section-title="social">Publicaciones, convocatorias y resultados</h2><p data-section-description="social">Consulta las publicaciones de la página oficial de INMUDEJ Delicias.</p></div>
+          <a class="btn btn-white" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener" data-facebook-link><i class="bi bi-facebook"></i> Abrir página oficial</a>
         </div>
         <div class="social-grid">
           <div class="facebook-card reveal">
@@ -207,10 +229,10 @@
                 src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FINMUDEJDelicias&tabs=timeline&width=500&height=760&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
                 width="500" height="760" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
               <div class="facebook-fallback">
-                <i class="bi bi-facebook"></i><p>Si tu navegador bloquea contenido de Facebook, puedes abrir la página oficial directamente.</p><a href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener">Abrir Facebook <i class="bi bi-arrow-up-right"></i></a>
+                <i class="bi bi-facebook"></i><p>Si tu navegador bloquea contenido de Facebook, puedes abrir la página oficial directamente.</p><a href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener" data-facebook-link>Abrir Facebook <i class="bi bi-arrow-up-right"></i></a>
               </div>
             </div>
-            <a class="facebook-direct" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener"><i class="bi bi-facebook"></i> ¿No ves las publicaciones? Abrir INMUDEJ Delicias en Facebook <i class="bi bi-arrow-up-right"></i></a>
+            <a class="facebook-direct" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener" data-facebook-link><i class="bi bi-facebook"></i> ¿No ves las publicaciones? Abrir INMUDEJ Delicias en Facebook <i class="bi bi-arrow-up-right"></i></a>
           </div>
           <aside class="social-feature reveal">
             <img src="assets/img/identidad-institucional.jpg" alt="Identidad institucional Gobierno Municipal de Delicias e INMUDEJ">
@@ -225,7 +247,7 @@
         <div class="cta-band reveal">
           <div class="cta-art"><i class="bi bi-trophy"></i><i class="bi bi-person-arms-up"></i></div>
           <div class="cta-copy"><span>INMUDEJ DELICIAS</span><h2>Actívate, participa y forma parte de la comunidad.</h2><p>Consulta el calendario y las redes oficiales para conocer inscripciones, sedes, requisitos y nuevas actividades.</p></div>
-          <a class="btn btn-green btn-lg" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener">Seguir en Facebook <i class="bi bi-arrow-up-right"></i></a>
+          <a class="btn btn-green btn-lg" href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener" data-facebook-link>Seguir en Facebook <i class="bi bi-arrow-up-right"></i></a>
           <span class="cta-accent green"></span><span class="cta-accent orange"></span>
         </div>
       </div>
@@ -239,15 +261,34 @@
           <img class="footer-logo" src="assets/img/inmudej-logo.png" alt="INMUDEJ Delicias">
           <p>Instituto Municipal del Deporte y la Juventud de Delicias. Deporte, participación y desarrollo integral para una comunidad más activa.</p>
         </div>
-        <div class="footer-col"><h4>Explora</h4><a href="#conocenos">Conócenos</a><a href="#servicios">Servicios</a><a href="#calendario">Calendario</a><a href="#publicaciones">Publicaciones</a></div>
+        <div class="footer-col"><h4>Explora</h4><a href="#servicios">Servicios</a><a href="#torneos">Torneos</a><a href="#convocatorias">Convocatorias</a><a href="#calendario">Calendario</a></div>
         <div class="footer-col"><h4>Transparencia</h4><a href="#transparencia">Documentos</a><a href="fracciones-ichitaip.html">Fracciones ICHITAIP</a><a href="visor-pdf.html?file=assets/pdfs/normatividad/reglamento-interior-inmudej.pdf&title=Reglamento%20Interior%20del%20INMUDEJ">Reglamento Interior</a></div>
-        <div class="footer-col"><h4>Canales oficiales</h4><a href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener"><i class="bi bi-facebook"></i> Facebook INMUDEJ Delicias</a><span><i class="bi bi-geo-alt"></i> Delicias, Chihuahua</span></div>
+        <div class="footer-col"><h4>Canales oficiales</h4><a href="https://www.facebook.com/INMUDEJDelicias" target="_blank" rel="noopener" data-facebook-link><i class="bi bi-facebook"></i> Facebook INMUDEJ Delicias</a><span><i class="bi bi-geo-alt"></i> <span id="footerAddress">Delicias, Chihuahua</span></span><a href="admin.html"><i class="bi bi-shield-lock"></i> Acceso administrativo</a></div>
       </div>
       <div class="footer-bottom"><span>© <span id="year"></span> INMUDEJ Delicias</span><strong>Gobierno Municipal de Delicias 2024–2027</strong></div>
     </div>
   </footer>
 
   <div class="toast" id="siteToast" role="status" aria-live="polite"></div>
+  <div class="site-modal-backdrop" id="loginModal" hidden>
+    <section class="site-login-modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
+      <button class="site-modal-close" id="closeLogin" type="button" aria-label="Cerrar"><i class="bi bi-x-lg"></i></button>
+      <div class="login-modal-brand"><img src="assets/img/inmudej-logo.png" alt="INMUDEJ Delicias"></div>
+      <span class="eyebrow">Acceso administrativo</span>
+      <h2 id="loginModalTitle">Administrar sitio INMUDEJ</h2>
+      <p>Ingresa con tu usuario o correo y contraseña para acceder a la administración del sitio.</p>
+      <form id="publicLoginForm" class="public-login-form">
+        <label>Usuario o correo<input name="identifier" autocomplete="username" required placeholder="admin"></label>
+        <label>Contraseña<input name="password" type="password" autocomplete="current-password" required></label>
+        <div class="login-error" id="loginMessage"></div>
+        <div class="site-modal-actions"><button type="button" class="btn btn-outline" id="cancelLogin">Cancelar</button><button type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i> Ingresar</button></div>
+      </form>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/cms.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>

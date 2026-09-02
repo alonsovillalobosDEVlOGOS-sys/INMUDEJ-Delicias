@@ -16,7 +16,7 @@
   <div class="auth-shell" id="authShell">
     <div class="auth-card">
       <img src="assets/img/inmudej-logo.png" alt="INMUDEJ Delicias" class="auth-logo">
-      <div id="authLoading" class="auth-loading"><span class="spinner dark"></span><b>Conectando con Supabase…</b></div>
+      <div id="authLoading" class="auth-loading"><span class="spinner dark"></span><b>Preparando panel…</b></div>
 
       <div id="setupView" hidden>
         <span class="auth-eyebrow">Primera configuración</span>
@@ -30,7 +30,7 @@
           <label>Confirmar contraseña<input name="confirm" type="password" required minlength="8"></label>
           <button class="primary-btn" type="submit">Crear administrador <i class="bi bi-shield-check"></i></button>
         </form>
-        <div class="auth-note warning"><i class="bi bi-envelope-check"></i><span>Si Supabase tiene activada la confirmación por correo, deberás confirmar el mensaje recibido antes del primer acceso.</span></div>
+        <div class="auth-note warning"><i class="bi bi-envelope-check"></i><span>Si recibes un mensaje de verificación en tu correo, completa ese paso antes del primer acceso.</span></div>
       </div>
 
       <div id="loginView" hidden>
@@ -45,8 +45,8 @@
       </div>
 
       <div id="authError" class="auth-error" hidden></div>
-      <div class="auth-note"><i class="bi bi-cloud-check"></i><span>Autenticación, permisos, contenidos y archivos conectados a Supabase. Las contraseñas no se almacenan en el código del sitio.</span></div>
-      <a class="back-site" href="index.html"><i class="bi bi-arrow-left"></i> Volver a la landing</a>
+      <div class="auth-note"><i class="bi bi-shield-check"></i><span>Acceso reservado para personal autorizado del INMUDEJ.</span></div>
+      <a class="back-site" href="index.html"><i class="bi bi-arrow-left"></i> Volver al sitio</a>
     </div>
   </div>
 
@@ -55,63 +55,77 @@
       <div class="side-brand"><img src="assets/img/inmudej-logo.png" alt="INMUDEJ"><span>Administración</span></div>
       <nav class="side-nav" id="sideNav">
         <button class="active" data-view="dashboard"><i class="bi bi-grid-1x2-fill"></i><span>Resumen</span></button>
-        <div class="side-label">Contenido</div>
-        <button data-view="carousel" data-permission="content"><i class="bi bi-images"></i><span>Carrousel</span></button>
+        <div class="side-label">Contenido público</div>
+        <button data-view="carousel" data-permission="content"><i class="bi bi-images"></i><span>Portada y carrousel</span></button>
+        <button data-view="announcements" data-permission="content"><i class="bi bi-bell-fill"></i><span>Avisos</span></button>
+        <button data-view="tournaments" data-permission="content"><i class="bi bi-trophy-fill"></i><span>Torneos</span></button>
         <button data-view="calls" data-permission="content"><i class="bi bi-megaphone-fill"></i><span>Convocatorias</span></button>
         <button data-view="forms" data-permission="content"><i class="bi bi-ui-checks-grid"></i><span>Formularios</span></button>
         <button data-view="events" data-permission="events"><i class="bi bi-calendar-event-fill"></i><span>Calendario</span></button>
         <button data-view="services" data-permission="services"><i class="bi bi-stars"></i><span>Servicios y costos</span></button>
-        <button data-view="docs" data-permission="docs"><i class="bi bi-folder2-open"></i><span>Transparencia</span></button>
+        <button data-view="sections" data-permission="institutional"><i class="bi bi-layout-text-window-reverse"></i><span>Textos de secciones</span></button>
         <button data-view="institutional" data-permission="institutional"><i class="bi bi-bank2"></i><span>Conócenos</span></button>
-        <div class="side-label">Seguridad</div>
+        <button data-view="docs" data-permission="docs"><i class="bi bi-folder2-open"></i><span>Transparencia</span></button>
+        <div class="side-label">Accesos</div>
         <button data-view="users" data-permission="users"><i class="bi bi-people-fill"></i><span>Usuarios</span></button>
         <button data-view="roles" data-permission="roles"><i class="bi bi-person-lock"></i><span>Roles y permisos</span></button>
       </nav>
-      <div class="side-bottom"><a href="index.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i><span>Ver sitio público</span></a><button id="logoutBtn"><i class="bi bi-box-arrow-left"></i><span>Cerrar sesión</span></button></div>
+      <div class="side-bottom"><a href="index.html" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right"></i><span>Ver sitio público</span></a><button id="logoutBtn"><i class="bi bi-box-arrow-left"></i><span>Cerrar sesión</span></button></div>
     </aside>
 
     <main class="admin-main">
       <header class="topbar">
-        <button class="mobile-menu" id="adminMenuBtn"><i class="bi bi-list"></i></button>
+        <button class="mobile-menu" id="adminMenuBtn" aria-label="Abrir menú"><i class="bi bi-list"></i></button>
         <div><small>INMUDEJ Delicias</small><h2 id="viewTitle">Panel de control</h2></div>
-        <div class="cloud-status"><span></span> Supabase</div>
+        <div class="cloud-status"><span></span> En línea</div>
         <div class="admin-user"><span class="avatar" id="adminAvatar">A</span><div><b id="adminName">Administrador</b><small id="adminEmail"></small></div></div>
       </header>
 
       <div class="workspace">
         <section class="admin-view active" data-panel="dashboard">
-          <div class="welcome-card"><div><span>CMS INMUDEJ + SUPABASE</span><h1>Todo el sitio en un solo lugar</h1><p>Actualiza fotografías, convocatorias, formularios, eventos, servicios, transparencia y accesos sin editar el código de la landing.</p></div><div class="welcome-art"><i class="bi bi-trophy-fill"></i><i class="bi bi-cloud-fill"></i></div></div>
+          <div class="welcome-card"><div><span>ADMINISTRACIÓN INMUDEJ</span><h1>Todo el contenido en un solo lugar</h1><p>Actualiza fotografías, avisos, torneos, convocatorias, formularios, eventos, servicios y documentos desde una interfaz sencilla.</p></div><div class="welcome-art"><i class="bi bi-trophy-fill"></i><i class="bi bi-stars"></i></div></div>
           <div class="stats-grid" id="statsGrid"></div>
           <div class="dashboard-grid">
-            <article class="panel-card"><div class="panel-head"><div><span class="panel-icon blue"><i class="bi bi-lightning-fill"></i></span><div><h3>Acciones rápidas</h3><p>Publica contenido en segundos.</p></div></div></div><div class="quick-actions"><button data-quick="calls" data-permission="content"><i class="bi bi-megaphone"></i><span>Nueva convocatoria</span></button><button data-quick="events" data-permission="events"><i class="bi bi-calendar-plus"></i><span>Nuevo evento</span></button><button data-quick="services" data-permission="services"><i class="bi bi-plus-circle"></i><span>Nuevo servicio</span></button><button data-quick="carousel" data-permission="content"><i class="bi bi-image"></i><span>Agregar fotografía</span></button></div></article>
-            <article class="panel-card"><div class="panel-head"><div><span class="panel-icon green"><i class="bi bi-cloud-check"></i></span><div><h3>Estado del sitio</h3><p>Base de datos y almacenamiento.</p></div></div></div><div class="status-list"><div><span>Última actualización</span><b id="lastUpdate">—</b></div><div><span>Almacenamiento</span><b>Supabase Storage</b></div><div><span>Rol actual</span><b id="currentRole">—</b></div><div><span>Sitio público</span><b class="ok"><i class="bi bi-check-circle-fill"></i> Disponible</b></div></div></article>
+            <article class="panel-card"><div class="panel-head"><div><span class="panel-icon blue"><i class="bi bi-lightning-fill"></i></span><div><h3>Acciones rápidas</h3><p>Publica y actualiza contenido en pocos pasos.</p></div></div></div><div class="quick-actions"><button data-quick="announcements" data-permission="content"><i class="bi bi-bell"></i><span>Nuevo aviso</span></button><button data-quick="tournaments" data-permission="content"><i class="bi bi-trophy"></i><span>Nuevo torneo</span></button><button data-quick="calls" data-permission="content"><i class="bi bi-megaphone"></i><span>Nueva convocatoria</span></button><button data-quick="events" data-permission="events"><i class="bi bi-calendar-plus"></i><span>Nuevo evento</span></button><button data-quick="services" data-permission="services"><i class="bi bi-plus-circle"></i><span>Nuevo servicio</span></button><button data-quick="carousel" data-permission="content"><i class="bi bi-image"></i><span>Agregar fotografía</span></button></div></article>
+            <article class="panel-card"><div class="panel-head"><div><span class="panel-icon green"><i class="bi bi-check2-circle"></i></span><div><h3>Estado del contenido</h3><p>Resumen general de la información publicada.</p></div></div></div><div class="status-list"><div><span>Última actualización</span><b id="lastUpdate">—</b></div><div><span>Publicación</span><b class="ok"><i class="bi bi-check-circle-fill"></i> Sincronizada</b></div><div><span>Rol actual</span><b id="currentRole">—</b></div><div><span>Sitio público</span><b class="ok"><i class="bi bi-check-circle-fill"></i> Disponible</b></div></div></article>
           </div>
-          <div class="migration-card" id="legacyMigrationCard" hidden><div><span class="panel-icon orange"><i class="bi bi-database-up"></i></span><div><h3>Se detectaron datos locales de la versión anterior</h3><p>Puedes migrarlos a Supabase conservando el contenido creado en el CMS v2.</p></div></div><button class="secondary-btn" id="migrateLegacyBtn"><i class="bi bi-cloud-arrow-up"></i> Migrar a Supabase</button></div>
         </section>
 
-        <section class="admin-view" data-panel="carousel"><div class="view-head"><div><span class="view-kicker">Portada</span><h1>Carrousel principal</h1><p>Administra las fotografías y mensajes que aparecen al inicio de la landing.</p></div><button class="primary-btn" data-add="carousel"><i class="bi bi-plus-lg"></i> Agregar fotografía</button></div><div class="content-grid media-grid" id="carouselList"></div></section>
-        <section class="admin-view" data-panel="calls"><div class="view-head"><div><span class="view-kicker">Participación</span><h1>Convocatorias</h1><p>Publica convocatorias con imagen, resumen, categoría, fecha y enlace.</p></div><button class="primary-btn" data-add="calls"><i class="bi bi-plus-lg"></i> Nueva convocatoria</button></div><div class="content-table-card"><div class="toolbar"><div class="search-box"><i class="bi bi-search"></i><input data-search="calls" placeholder="Buscar convocatoria..."></div></div><div class="admin-list" id="callsList"></div></div></section>
-        <section class="admin-view" data-panel="forms"><div class="view-head"><div><span class="view-kicker">Inscripciones</span><h1>Formularios</h1><p>Sube formatos PDF o publica enlaces de Google Forms y otros formularios.</p></div><button class="primary-btn" data-add="forms"><i class="bi bi-plus-lg"></i> Agregar formulario</button></div><div class="content-table-card"><div class="admin-list" id="formsList"></div></div></section>
+        <section class="admin-view" data-panel="carousel"><div class="view-head"><div><span class="view-kicker">Portada</span><h1>Carrousel principal</h1><p>Administra las fotografías y mensajes que aparecen al inicio del sitio.</p></div><button class="primary-btn" data-add="carousel"><i class="bi bi-plus-lg"></i> Agregar fotografía</button></div><div class="content-grid media-grid" id="carouselList"></div></section>
+
+        <section class="admin-view" data-panel="announcements"><div class="view-head"><div><span class="view-kicker">Información destacada</span><h1>Avisos y anuncios</h1><p>Publica avisos con fotografía, fecha, prioridad y enlace de consulta.</p></div><button class="primary-btn" data-add="announcements"><i class="bi bi-plus-lg"></i> Nuevo aviso</button></div><div class="content-table-card"><div class="toolbar"><div class="search-box"><i class="bi bi-search"></i><input data-search="announcements" placeholder="Buscar aviso..."></div></div><div class="admin-list" id="announcementsList"></div></div></section>
+
+        <section class="admin-view" data-panel="tournaments"><div class="view-head"><div><span class="view-kicker">Competencia</span><h1>Torneos y competencias</h1><p>Registra disciplinas, sedes, fechas, imágenes y accesos de inscripción.</p></div><button class="primary-btn" data-add="tournaments"><i class="bi bi-plus-lg"></i> Nuevo torneo</button></div><div class="content-table-card"><div class="toolbar"><div class="search-box"><i class="bi bi-search"></i><input data-search="tournaments" placeholder="Buscar torneo..."></div></div><div class="admin-list" id="tournamentsList"></div></div></section>
+
+        <section class="admin-view" data-panel="calls"><div class="view-head"><div><span class="view-kicker">Participación</span><h1>Convocatorias</h1><p>Publica convocatorias con fotografía, resumen, categoría, fecha y formulario.</p></div><button class="primary-btn" data-add="calls"><i class="bi bi-plus-lg"></i> Nueva convocatoria</button></div><div class="content-table-card"><div class="toolbar"><div class="search-box"><i class="bi bi-search"></i><input data-search="calls" placeholder="Buscar convocatoria..."></div></div><div class="admin-list" id="callsList"></div></div></section>
+
+        <section class="admin-view" data-panel="forms"><div class="view-head"><div><span class="view-kicker">Inscripciones</span><h1>Formularios</h1><p>Sube formatos o publica enlaces de inscripción para cursos, torneos y competencias.</p></div><button class="primary-btn" data-add="forms"><i class="bi bi-plus-lg"></i> Agregar formulario</button></div><div class="content-table-card"><div class="admin-list" id="formsList"></div></div></section>
+
         <section class="admin-view" data-panel="events"><div class="view-head"><div><span class="view-kicker">Agenda</span><h1>Calendario de actividades</h1><p>Registra eventos, torneos, cursos, horarios y ubicaciones.</p></div><button class="primary-btn" data-add="events"><i class="bi bi-plus-lg"></i> Nuevo evento</button></div><div class="content-table-card"><div class="toolbar"><div class="search-box"><i class="bi bi-search"></i><input data-search="events" placeholder="Buscar evento..."></div></div><div class="admin-list" id="eventsList"></div></div></section>
-        <section class="admin-view" data-panel="services"><div class="view-head"><div><span class="view-kicker">Oferta institucional</span><h1>Servicios, cursos y costos</h1><p>Agrega opciones como alberca, cursos, instalaciones, escuelas deportivas y cuotas.</p></div><button class="primary-btn" data-add="services"><i class="bi bi-plus-lg"></i> Nuevo servicio</button></div><div class="content-grid" id="servicesList"></div></section>
-        <section class="admin-view" data-panel="docs"><div class="view-head"><div><span class="view-kicker">Transparencia</span><h1>Documentos públicos</h1><p>Sube avisos de privacidad, reglamentos, manuales y documentos institucionales.</p></div><button class="primary-btn" data-add="docs"><i class="bi bi-plus-lg"></i> Nuevo documento</button></div><div class="content-table-card"><div class="admin-list" id="docsList"></div></div></section>
-        <section class="admin-view" data-panel="institutional"><div class="view-head"><div><span class="view-kicker">Conócenos</span><h1>Información institucional</h1><p>Edita portada, misión, visión y datos generales.</p></div></div><div class="institutional-editor panel-card"><form id="institutionalForm" class="form-grid"><label>Título principal<input name="heroTitlePrefix"></label><label>Texto destacado<input name="heroTitleAccent"></label><label class="wide">Descripción de portada<textarea name="heroLead" rows="3"></textarea></label><label>Facebook<input name="facebook"></label><label>Domicilio / ciudad<input name="address"></label><label class="wide">Título de Misión<input name="missionTitle"></label><label class="wide">Misión<textarea name="missionText" rows="5"></textarea></label><label class="wide">Título de Visión<input name="visionTitle"></label><label class="wide">Visión<textarea name="visionText" rows="5"></textarea></label><div class="form-actions wide"><button type="submit" class="primary-btn"><i class="bi bi-check2"></i> Guardar cambios</button></div></form></div></section>
 
-        <section class="admin-view" data-panel="users"><div class="view-head"><div><span class="view-kicker">Seguridad</span><h1>Usuarios</h1><p>Asigna roles, activa accesos y genera invitaciones seguras para nuevos colaboradores.</p></div><button class="primary-btn" id="inviteUserBtn"><i class="bi bi-person-plus"></i> Invitar usuario</button></div><div class="content-table-card"><div class="admin-list" id="usersList"></div></div><div class="subsection-head"><div><span class="view-kicker">Invitaciones</span><h2>Pendientes y recientes</h2></div></div><div class="content-table-card"><div class="admin-list" id="invitesList"></div></div></section>
+        <section class="admin-view" data-panel="services"><div class="view-head"><div><span class="view-kicker">Oferta institucional</span><h1>Servicios, cursos y costos</h1><p>Administra alberca, cursos, instalaciones, escuelas deportivas, cuotas, horarios y requisitos.</p></div><button class="primary-btn" data-add="services"><i class="bi bi-plus-lg"></i> Nuevo servicio</button></div><div class="content-grid" id="servicesList"></div></section>
 
-        <section class="admin-view" data-panel="roles"><div class="view-head"><div><span class="view-kicker">Seguridad</span><h1>Roles y permisos</h1><p>Define qué módulos puede administrar cada perfil de usuario.</p></div><button class="primary-btn" id="addRoleBtn"><i class="bi bi-plus-lg"></i> Nuevo rol</button></div><div class="content-grid role-grid" id="rolesList"></div></section>
+        <section class="admin-view" data-panel="sections"><div class="view-head"><div><span class="view-kicker">Contenido editorial</span><h1>Textos de las secciones</h1><p>Edita encabezados, descripciones, orden y visibilidad de las secciones públicas.</p></div></div><div class="content-grid section-editor-grid" id="sectionsList"></div></section>
+
+        <section class="admin-view" data-panel="institutional"><div class="view-head"><div><span class="view-kicker">Conócenos</span><h1>Información institucional</h1><p>Edita la portada, misión, visión y datos generales del Instituto.</p></div></div><div class="institutional-editor panel-card"><form id="institutionalForm" class="form-grid"><label>Título principal<input name="heroTitlePrefix"></label><label>Texto destacado<input name="heroTitleAccent"></label><label class="wide">Descripción de portada<textarea name="heroLead" rows="3"></textarea></label><label>Facebook<input name="facebook"></label><label>Domicilio / ciudad<input name="address"></label><label class="wide">Título de Misión<input name="missionTitle"></label><label class="wide">Misión<textarea name="missionText" rows="5"></textarea></label><label class="wide">Título de Visión<input name="visionTitle"></label><label class="wide">Visión<textarea name="visionText" rows="5"></textarea></label><div class="form-actions wide"><button type="submit" class="primary-btn"><i class="bi bi-check2"></i> Guardar cambios</button></div></form></div></section>
+
+        <section class="admin-view" data-panel="docs"><div class="view-head"><div><span class="view-kicker">Transparencia</span><h1>Documentos públicos</h1><p>Administra avisos de privacidad, reglamentos, manuales y documentos institucionales.</p></div><button class="primary-btn" data-add="docs"><i class="bi bi-plus-lg"></i> Nuevo documento</button></div><div class="content-table-card"><div class="admin-list" id="docsList"></div></div></section>
+
+        <section class="admin-view" data-panel="users"><div class="view-head"><div><span class="view-kicker">Accesos</span><h1>Usuarios</h1><p>Asigna roles, activa accesos y genera invitaciones para nuevos colaboradores.</p></div><button class="primary-btn" id="inviteUserBtn"><i class="bi bi-person-plus"></i> Invitar usuario</button></div><div class="content-table-card"><div class="admin-list" id="usersList"></div></div><div class="subsection-head"><div><span class="view-kicker">Invitaciones</span><h2>Pendientes y recientes</h2></div></div><div class="content-table-card"><div class="admin-list" id="invitesList"></div></div></section>
+
+        <section class="admin-view" data-panel="roles"><div class="view-head"><div><span class="view-kicker">Permisos</span><h1>Roles y permisos</h1><p>Define qué módulos puede administrar cada perfil de usuario.</p></div><button class="primary-btn" id="addRoleBtn"><i class="bi bi-plus-lg"></i> Nuevo rol</button></div><div class="content-grid role-grid" id="rolesList"></div></section>
       </div>
     </main>
   </div>
 
   <div class="modal-backdrop" id="modalBackdrop" hidden>
     <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <header class="modal-head"><div><span id="modalKicker">Administrar</span><h2 id="modalTitle">Nuevo elemento</h2></div><button type="button" class="icon-btn" id="closeModal"><i class="bi bi-x-lg"></i></button></header>
+      <header class="modal-head"><div><span id="modalKicker">Administrar</span><h2 id="modalTitle">Nuevo elemento</h2></div><button type="button" class="icon-btn" id="closeModal" aria-label="Cerrar"><i class="bi bi-x-lg"></i></button></header>
       <form id="modalForm"><div class="modal-body" id="modalFields"></div><footer class="modal-foot"><button type="button" class="secondary-btn" id="cancelModal">Cancelar</button><button type="submit" class="primary-btn" id="modalSubmit"><i class="bi bi-check2"></i> Guardar</button></footer></form>
     </section>
   </div>
 
-  <div class="toast" id="adminToast"></div>
+  <div class="toast" id="adminToast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/config.js"></script>
   <script src="assets/js/cms.js"></script>
