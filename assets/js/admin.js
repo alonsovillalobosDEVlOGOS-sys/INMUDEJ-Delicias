@@ -119,17 +119,38 @@
   }
 
   $('#modalForm').addEventListener('submit',async e=>{
-    e.preventDefault();const mode=e.currentTarget.dataset.mode,submit=$('#modalSubmit');setBusy(submit,true);$('#cancelModal').disabled=true;$('#closeModal').disabled=true;
+    e.preventDefault();
+    // Conservar una referencia estable al formulario. Event.currentTarget sólo está
+    // garantizado durante la fase síncrona del evento y puede quedar en null tras un await.
+    const form=e.currentTarget,mode=form.dataset.mode,submit=$('#modalSubmit'),controls=form.elements;
+    setBusy(submit,true);$('#cancelModal').disabled=true;$('#closeModal').disabled=true;
     try{
       if(mode==='content'){
-        const type=currentType,sch=schemas[type],fd=new FormData(e.currentTarget),existing=currentId?(data[type]||[]).find(x=>x.id===currentId):null,obj=existing?{...existing}:{id:CMS.uid(type)};
-        for(const f of sch.fields){const [name,,kind]=f;if(kind==='checkbox')obj[name]=e.currentTarget.elements[name].checked;else if(kind==='image'){const file=e.currentTarget.elements[name+'File']?.files?.[0];obj[name]=file?await CMS.uploadFile(await compressImage(file),sch.folder):fd.get(name)||''}else if(kind==='file'){const file=e.currentTarget.elements[name+'File']?.files?.[0];if(file)obj.url=await CMS.uploadFile(file,sch.folder)}else if(kind==='number')obj[name]=Number(fd.get(name)||0);else obj[name]=fd.get(name)||''}
+        const type=currentType,sch=schemas[type];
+        if(!sch)throw new Error('No fue posible identificar el módulo a guardar.');
+        const fd=new FormData(form),existing=currentId?(data[type]||[]).find(x=>x.id===currentId):null,obj=existing?{...existing}:{id:CMS.uid(type)};
+        for(const f of sch.fields){
+          const [name,,kind]=f;
+          if(kind==='checkbox'){
+            obj[name]=!!controls[name]?.checked;
+          }else if(kind==='image'){
+            const file=controls[name+'File']?.files?.[0];
+            obj[name]=file?await CMS.uploadFile(await compressImage(file),sch.folder):fd.get(name)||'';
+          }else if(kind==='file'){
+            const file=controls[name+'File']?.files?.[0];
+            if(file)obj.url=await CMS.uploadFile(file,sch.folder);
+          }else if(kind==='number'){
+            obj[name]=Number(fd.get(name)||0);
+          }else{
+            obj[name]=fd.get(name)||'';
+          }
+        }
         if((type==='forms'||type==='docs')&&!obj.url)throw new Error('Indica un enlace o sube un archivo.');
         if(type==='tournaments'&&obj.endDate&&obj.startDate&&obj.endDate<obj.startDate)throw new Error('La fecha de término no puede ser anterior a la fecha de inicio.');
         await CMS.saveItem(type,obj);toast(`${sch.title} guardado`);closeModal();await reloadAll();
-      }else if(mode==='user'){await saveUserFromModal(e.currentTarget);closeModal();[users,invites]=await Promise.all([CMS.listUsers(),CMS.listInvites()]);renderUsers();renderInvites();bindActions();toast('Usuario actualizado')}
-      else if(mode==='invite'){await saveInviteFromModal(e.currentTarget);closeModal();invites=await CMS.listInvites();renderInvites();bindActions()}
-      else if(mode==='role'){await saveRoleFromModal(e.currentTarget);closeModal();roles=await CMS.listRoles();renderRoles();bindActions();toast('Rol guardado')}
+      }else if(mode==='user'){await saveUserFromModal(form);closeModal();[users,invites]=await Promise.all([CMS.listUsers(),CMS.listInvites()]);renderUsers();renderInvites();bindActions();toast('Usuario actualizado')}
+      else if(mode==='invite'){await saveInviteFromModal(form);closeModal();invites=await CMS.listInvites();renderInvites();bindActions()}
+      else if(mode==='role'){await saveRoleFromModal(form);closeModal();roles=await CMS.listRoles();renderRoles();bindActions();toast('Rol guardado')}
     }catch(err){toast(err.message||'No fue posible guardar')}finally{setBusy(submit,false);$('#cancelModal').disabled=false;$('#closeModal').disabled=false}
   });
 
