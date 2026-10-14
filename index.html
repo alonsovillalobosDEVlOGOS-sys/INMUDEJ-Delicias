@@ -308,6 +308,20 @@
       </form>
     </section>
   </div>
+  <div class="site-modal-backdrop" id="recoveryModal" hidden>
+    <section class="site-login-modal" role="dialog" aria-modal="true" aria-labelledby="recoveryModalTitle">
+      <div class="login-modal-brand"><img src="assets/img/inmudej-logo.png" alt="INMUDEJ Delicias"></div>
+      <span class="eyebrow">Recuperar acceso</span>
+      <h2 id="recoveryModalTitle">Crea una nueva contraseña</h2>
+      <p>Elige una contraseña nueva, única y de al menos 10 caracteres para tu cuenta administrativa.</p>
+      <form id="recoveryForm" class="public-login-form">
+        <label>Nueva contraseña<input name="password" type="password" autocomplete="new-password" minlength="10" required></label>
+        <label>Confirmar contraseña<input name="confirmPassword" type="password" autocomplete="new-password" minlength="10" required></label>
+        <div class="login-error" id="recoveryMessage" aria-live="polite"></div>
+        <div class="site-modal-actions"><button type="submit" class="btn btn-primary"><i class="bi bi-shield-check"></i> Guardar nueva contraseña</button></div>
+      </form>
+    </section>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/config.js"></script>
