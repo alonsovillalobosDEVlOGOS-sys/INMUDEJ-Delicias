@@ -89,6 +89,20 @@
   }
   async function getSession(){if(!sb)return null;return (await sb.auth.getSession()).data.session||null}
   async function signIn(identifier,password){if(!sb)throw new Error('El servicio de acceso no está disponible en este momento.');let email=String(identifier||'').trim();if(!email.includes('@')){const {data,error}=await sb.rpc('lookup_login_email',{p_identifier:email});if(error)throw error;if(!data)throw new Error('Usuario no encontrado.');email=data}const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;return data}
+  async function requestPasswordReset(identifier){
+    if(!sb)throw new Error('El servicio de acceso no está disponible en este momento.');
+    let email=String(identifier||'').trim();
+    if(!email)throw new Error('Indica el correo o usuario de la cuenta.');
+    if(!email.includes('@')){
+      const {data,error}=await sb.rpc('lookup_login_email',{p_identifier:email});
+      if(error)throw error;
+      if(!data)throw new Error('No se encontró una cuenta con ese usuario.');
+      email=data;
+    }
+    const redirectTo=cfg.siteUrl||new URL('index.html',window.location.href).href;
+    const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo});
+    if(error)throw error;
+  }
   async function signOut(){if(sb)await sb.auth.signOut()}
   async function bootstrapStatus(){if(!sb)return false;const {data,error}=await sb.rpc('bootstrap_status');if(error)throw error;return !!data}
   async function setupAdmin({name,email,password}){if(!sb)throw new Error('El servicio de acceso no está disponible en este momento.');const {data,error}=await sb.auth.signUp({email:String(email).trim().toLowerCase(),password,options:{data:{username:'admin',full_name:name}}});if(error)throw error;if(data.session){try{await claimFirstAdmin()}catch(_){}}return data}
@@ -118,5 +132,5 @@
   async function getInvite(token){const {data,error}=await sb.rpc('get_invite',{p_token:token});if(error)throw error;return Array.isArray(data)?data[0]:data}
   async function registerInvite({token,email,username,fullName,password}){const {data,error}=await sb.auth.signUp({email,password,options:{data:{username,full_name:fullName,invite_token:token}}});if(error)throw error;return data}
   async function migrateLegacyLocal(){let legacy;try{legacy=JSON.parse(localStorage.getItem(legacyKey)||'null')}catch(_){legacy=null}if(!legacy)return {migrated:false,message:'No se encontraron datos anteriores.'};if(legacy.site)await saveSite({...seed.site,...legacy.site});for(const type of ['carousel','services','forms','calls','events','docs'])for(const item of (legacy[type]||[]))await saveItem(type,{...item,id:item.id||uid(type)});return {migrated:true,message:'Contenido recuperado correctamente.'}}
-  window.INMUDEJCMS={cfg,supabase:sb,seed:clone(seed),escapeHtml:esc,uid,loadPublic,loadAdmin,getSession,signIn,signOut,bootstrapStatus,setupAdmin,claimFirstAdmin,getProfile,permissionsOf,can,saveItem,deleteItem,toggleItem,saveSite,uploadFile,submitRegistration,listRegistrations,listUsers,updateUser,listRoles,saveRole,deleteRole,listInvites,createInvite,getInvite,registerInvite,migrateLegacyLocal,legacyKey,permissionMap};
+  window.INMUDEJCMS={cfg,supabase:sb,seed:clone(seed),escapeHtml:esc,uid,loadPublic,loadAdmin,getSession,signIn,signOut,requestPasswordReset,bootstrapStatus,setupAdmin,claimFirstAdmin,getProfile,permissionsOf,can,saveItem,deleteItem,toggleItem,saveSite,uploadFile,submitRegistration,listRegistrations,listUsers,updateUser,listRoles,saveRole,deleteRole,listInvites,createInvite,getInvite,registerInvite,migrateLegacyLocal,legacyKey,permissionMap};
 })();

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="assets/css/admin.css?v=5.0">
+  <link rel="stylesheet" href="assets/css/admin.css?v=5.1">
 </head>
 <body>
   <div class="auth-shell" id="authShell">
@@ -41,6 +41,7 @@
           <label>Usuario o correo<input name="identifier" autocomplete="username" required placeholder="admin"></label>
           <label>Contraseña<div class="password-wrap"><input name="password" type="password" autocomplete="current-password" required id="loginPassword"><button type="button" id="togglePassword" aria-label="Mostrar contraseña"><i class="bi bi-eye"></i></button></div></label>
           <button class="primary-btn" type="submit">Ingresar <i class="bi bi-box-arrow-in-right"></i></button>
+          <button class="auth-link" id="forgotPasswordBtn" type="button"><i class="bi bi-key"></i> ¿Olvidaste tu contraseña?</button>
         </form>
       </div>
 
@@ -111,7 +112,7 @@
 
         <section class="admin-view" data-panel="docs"><div class="view-head"><div><span class="view-kicker">Transparencia</span><h1>Documentos públicos</h1><p>Administra avisos de privacidad, reglamentos, manuales y documentos institucionales.</p></div><button class="primary-btn" data-add="docs"><i class="bi bi-plus-lg"></i> Nuevo documento</button></div><div class="content-table-card"><div class="admin-list" id="docsList"></div></div></section>
 
-        <section class="admin-view" data-panel="users"><div class="view-head"><div><span class="view-kicker">Accesos</span><h1>Usuarios</h1><p>Asigna roles, activa accesos y genera invitaciones para nuevos colaboradores.</p></div><button class="primary-btn" id="inviteUserBtn"><i class="bi bi-person-plus"></i> Invitar usuario</button></div><div class="content-table-card"><div class="admin-list" id="usersList"></div></div><div class="subsection-head"><div><span class="view-kicker">Invitaciones</span><h2>Pendientes y recientes</h2></div></div><div class="content-table-card"><div class="admin-list" id="invitesList"></div></div></section>
+        <section class="admin-view" data-panel="users"><div class="view-head"><div><span class="view-kicker">Accesos</span><h1>Usuarios</h1><p>Asigna roles, activa accesos y genera invitaciones para nuevos colaboradores.</p></div><button class="primary-btn" id="inviteUserBtn"><i class="bi bi-person-plus"></i> Invitar usuario</button></div><div class="access-security-note"><i class="bi bi-shield-lock"></i><div><b>Contraseñas protegidas</b><span>No se almacenan ni se muestran en el panel. Usa la llave de cada usuario para enviar un enlace personal de restablecimiento.</span></div></div><div class="content-table-card"><div class="admin-list" id="usersList"></div></div><div class="subsection-head"><div><span class="view-kicker">Invitaciones</span><h2>Pendientes y recientes</h2></div></div><div class="content-table-card"><div class="admin-list" id="invitesList"></div></div></section>
 
         <section class="admin-view" data-panel="roles"><div class="view-head"><div><span class="view-kicker">Permisos</span><h1>Roles y permisos</h1><p>Define qué módulos puede administrar cada perfil de usuario.</p></div><button class="primary-btn" id="addRoleBtn"><i class="bi bi-plus-lg"></i> Nuevo rol</button></div><div class="content-grid role-grid" id="rolesList"></div></section>
       </div>
@@ -127,8 +128,8 @@
 
   <div class="toast" id="adminToast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/cms.js"></script>
-  <script src="assets/js/admin.js?v=5.0"></script>
+  <script src="assets/js/config.js?v=5.1"></script>
+  <script src="assets/js/cms.js?v=5.1"></script>
+  <script src="assets/js/admin.js?v=5.1"></script>
 </body>
 </html>
