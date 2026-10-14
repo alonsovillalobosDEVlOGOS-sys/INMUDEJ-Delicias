@@ -56,20 +56,20 @@
   const siteToDb=s=>({id:'main',hero_title_prefix:s.heroTitlePrefix||'',hero_title_accent:s.heroTitleAccent||'',hero_lead:s.heroLead||'',facebook:s.facebook||'',address:s.address||'',mission_title:s.missionTitle||'',mission_text:s.missionText||'',vision_title:s.visionTitle||'',vision_text:s.visionText||''});
   const dbToItem=(type,r)=>{
     if(type==='carousel')return {id:r.id,title:r.title,subtitle:r.subtitle||'',image:r.image_url||'',order:r.sort_order||0,active:r.active!==false};
-    if(type==='announcements')return {id:r.id,title:r.title,summary:r.summary||'',image:r.image_url||'',link:r.link_url||'',date:r.published_at||'',priority:r.priority||0,active:r.active!==false};
+    if(type==='announcements')return {id:r.id,title:r.title,summary:r.summary||'',image:r.image_url||'',link:r.link_url||'',date:r.published_at||'',priority:r.priority||0,formId:r.form_id||'',active:r.active!==false};
     if(type==='tournaments')return {id:r.id,title:r.title,sport:r.sport||'Deporte',startDate:r.start_date||'',endDate:r.end_date||'',location:r.location||'',summary:r.summary||'',image:r.image_url||'',link:r.link_url||'',formId:r.form_id||'',featured:!!r.featured,active:r.active!==false};
     if(type==='calls')return {id:r.id,title:r.title,category:r.category,date:r.event_date||'',summary:r.summary||'',image:r.image_url||'',link:r.link_url||'',formId:r.form_id||'',active:r.active!==false};
-    if(type==='events')return {id:r.id,title:r.title,date:r.event_date||'',time:(r.event_time||'').slice(0,5),location:r.location||'',category:r.category||'Deporte',description:r.description||'',active:r.active!==false};
+    if(type==='events')return {id:r.id,title:r.title,date:r.event_date||'',time:(r.event_time||'').slice(0,5),location:r.location||'',category:r.category||'Deporte',description:r.description||'',formId:r.form_id||'',active:r.active!==false};
     if(type==='services')return {...r,image:r.image_url||''};
     if(type==='sections')return {id:r.section_key,eyebrow:r.eyebrow||'',title:r.title||'',description:r.description||'',active:r.active!==false,order:r.sort_order||0};
     return {...r};
   };
   const itemToDb=(type,x)=>{
     if(type==='carousel')return {id:x.id,title:x.title,subtitle:x.subtitle||'',image_url:x.image||'',sort_order:Number(x.order||0),active:x.active!==false};
-    if(type==='announcements')return {id:x.id,title:x.title,summary:x.summary||'',image_url:x.image||'',link_url:x.link||'',published_at:x.date||null,priority:Number(x.priority||0),active:x.active!==false};
+    if(type==='announcements')return {id:x.id,title:x.title,summary:x.summary||'',image_url:x.image||'',link_url:x.link||'',published_at:x.date||null,priority:Number(x.priority||0),form_id:x.formId||null,active:x.active!==false};
     if(type==='tournaments')return {id:x.id,title:x.title,sport:x.sport||'Deporte',start_date:x.startDate||null,end_date:x.endDate||null,location:x.location||'',summary:x.summary||'',image_url:x.image||'',link_url:x.link||'',form_id:x.formId||null,featured:!!x.featured,active:x.active!==false};
     if(type==='calls')return {id:x.id,title:x.title,category:x.category||'Convocatoria',event_date:x.date||null,summary:x.summary||'',image_url:x.image||'',link_url:x.link||'',form_id:x.formId||null,active:x.active!==false};
-    if(type==='events')return {id:x.id,title:x.title,event_date:x.date,event_time:x.time||null,location:x.location||'',category:x.category||'Deporte',description:x.description||'',active:x.active!==false};
+    if(type==='events')return {id:x.id,title:x.title,event_date:x.date,event_time:x.time||null,location:x.location||'',category:x.category||'Deporte',description:x.description||'',form_id:x.formId||null,active:x.active!==false};
     if(type==='services')return {id:x.id,title:x.title,description:x.description||'',icon:x.icon||'bi-stars',tone:x.tone||'blue',price:x.price||'',details:x.details||'',image_url:x.image||'',active:x.active!==false};
     if(type==='sections')return {section_key:x.id,eyebrow:x.eyebrow||'',title:x.title||'',description:x.description||'',active:x.active!==false,sort_order:Number(x.order||0)};
     return {...x};

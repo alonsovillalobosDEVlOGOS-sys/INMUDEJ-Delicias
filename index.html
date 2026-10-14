@@ -280,6 +280,19 @@
   </footer>
 
   <div class="toast" id="siteToast" role="status" aria-live="polite"></div>
+  <div class="content-modal-backdrop" id="contentModal" hidden>
+    <section class="content-modal" role="dialog" aria-modal="true" aria-labelledby="contentModalTitle">
+      <button class="content-modal-close" id="closeContentModal" type="button" aria-label="Cerrar información"><i class="bi bi-x-lg"></i></button>
+      <div class="content-modal-media" id="contentModalMedia"></div>
+      <div class="content-modal-body">
+        <span class="content-modal-kicker" id="contentModalKicker"></span>
+        <h2 id="contentModalTitle"></h2>
+        <div class="content-modal-meta" id="contentModalMeta"></div>
+        <p id="contentModalDescription"></p>
+        <div class="content-modal-actions" id="contentModalActions"></div>
+      </div>
+    </section>
+  </div>
   <div class="site-modal-backdrop" id="loginModal" hidden>
     <section class="site-login-modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
       <button class="site-modal-close" id="closeLogin" type="button" aria-label="Cerrar"><i class="bi bi-x-lg"></i></button>
