@@ -11,7 +11,9 @@
   const observe=()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>io?io.observe(el):el.classList.add('in'));observe();
   const sectionsEls=[...document.querySelectorAll('main section[id]')];
   const scrollSpy=()=>{const y=window.scrollY+140;let current='inicio';for(const s of sectionsEls){if(!s.hidden&&s.offsetTop<=y)current=s.id}navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${current}`))};
-  window.addEventListener('scroll',scrollSpy,{passive:true});scrollSpy();
+  const siteNav=$('.nav');
+  const syncNav=()=>{scrollSpy();siteNav?.classList.toggle('scrolled',window.scrollY>24)};
+  window.addEventListener('scroll',syncNav,{passive:true});syncNav();
   const year=$('#year');if(year)year.textContent=new Date().getFullYear();
 
   const fmtDate=s=>{if(!s)return '';const d=new Date(`${s}T12:00:00`);return Number.isNaN(+d)?'':d.toLocaleDateString('es-MX',{day:'numeric',month:'long',year:'numeric'})};
