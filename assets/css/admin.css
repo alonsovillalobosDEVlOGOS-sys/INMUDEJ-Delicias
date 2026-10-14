@@ -45,6 +45,7 @@
   min-height:0;
   overflow:hidden;
 }
+.registration-preview{display:grid;gap:8px}.registration-preview article{display:grid;gap:3px;padding:11px 12px;border:1px solid #e0e9f1;border-radius:10px;background:#f8fbfe}.registration-preview article b{font-size:.82rem;color:#173d68}.registration-preview article span,.registration-preview small{font-size:.82rem;color:#657b92}
 .modal-body{
   flex:1 1 auto;
   min-height:0;
